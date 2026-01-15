@@ -23,3 +23,20 @@ The print command prints the total number of characters followed by the first 10
 Total number of character: 20479
 I HAD always thought Jack Gisburn rather a cheap genius--though a good fellow enough--so it was no
 ```
+
+Our goal is to tokenize this 20,479-character short story into individual words and special characters that we can then turn into embeddings for LLM training.
+
+Using some simple example text, we can use the re.split command with the following syntax to split a text on whitespace characters:
+
+```
+import re
+text = "Hello, world. This, is a test."
+result = re.split(r'(\s)', text)
+print(result)
+```
+
+The result is a list of individual words, whitespaces, and punctuation characters:
+
+```
+['Hello,', ' ', 'world.', ' ', 'This,', ' ', 'is', ' ', 'a', ' ', 'test.']
+```
