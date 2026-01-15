@@ -4,3 +4,15 @@
 **Deep neural network models**, including LLMs, cannot process raw text directly. Since text is **categorical**, it isn’t compatible with the **mathematical operations** used to implement and train neural networks. Therefore, we need a way to represent words as **continuous-valued vectors**.
 
 The concept of converting data into a vector format is often referred to as embedding. Using a specific neural network layer or another pretrained neural network model, we can embed different data types—for example, video, audio, and text. However, it’s important to note that **different data formats** require **distinct embedding models**. For example, an embedding model designed for text would not be suitable for embedding audio or video data.
+
+While we can use pretrained models such as Word2Vec to generate embeddings for machine learning models, LLMs commonly produce their own embeddings that are part of the input layer and are updated during training. The advantage of optimizing the embeddings as part of the LLM training instead of using Word2Vec is that the embeddings are optimized to the specific task and data at hand. 
+
+## Tokenizing Text
+The text we will tokenize for LLM training is “The Verdict,” a short story by Edith Wharton.
+
+`
+with open("the-verdict.txt", "r", encoding="utf-8") as f:
+raw_text = f.read()
+print("Total number of character:", len(raw_text))
+print(raw_text[:99])
+`
