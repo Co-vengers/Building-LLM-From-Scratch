@@ -81,3 +81,18 @@ Output:
 ```
 ['Hello', ',', 'world', '.', 'Is', 'this', '--', 'a', 'test', '?']
 ```
+
+Let’s apply it to Edith Wharton’s entire short story:
+
+```
+preprocessed = re.split(r'([,.:;?_!"()\']|--|\s)', raw_text)
+preprocessed = [item.strip() for item in preprocessed if item.strip()]
+print(len(preprocessed))
+print(preprocessed[:30])
+```
+
+Output:
+
+```
+['I', 'HAD', 'always', 'thought', 'Jack', 'Gisburn', 'rather', 'a', 'cheap', 'genius', '--', 'though', 'a', 'good', 'fellow', 'enough', '--', 'so', 'it', 'was', 'no', 'great', 'surprise', 'to', 'me', 'to' 'hear', 'that', ',', 'in']
+```
