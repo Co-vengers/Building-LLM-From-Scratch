@@ -1,4 +1,4 @@
-Chapter-1: Understanding Large Language Model
+#Chapter-1: Understanding Large Language Model
 
 An LLM is a neural network designed to understand, generate, and respond to human-like text. These models are deep neural networks trained on massive amounts of text data, sometimes encompassing large portions of the entire publicly available text on the internet.
 
