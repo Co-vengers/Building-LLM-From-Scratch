@@ -148,3 +148,20 @@ class SimpleTokenizerV1:
         text = re.sub(r'\s+([,.?!"()\'])', r'\1', text)
         return text
 ```
+
+Let’s instantiate a new tokenizer object from the SimpleTokenizerV1 class and tokenize a passage from Edith Wharton’s short story:
+
+```
+tokenizer = SimpleTokenizerV1(vocab)
+text = """"It's the last he painted, you know,"
+    Mrs. Gisburn said with pardonable pride."""
+ids = tokenizer.encode(text)
+print(ids)
+```
+
+The preceding code prints the following token IDs:
+
+```
+[1, 56, 2, 850, 988, 602, 533, 746, 5, 1126, 596, 5, 1, 67, 7, 38, 851, 1108, 754, 793, 7]
+```
+
