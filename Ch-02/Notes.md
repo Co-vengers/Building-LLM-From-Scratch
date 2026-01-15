@@ -96,3 +96,35 @@ Output:
 ```
 ['I', 'HAD', 'always', 'thought', 'Jack', 'Gisburn', 'rather', 'a', 'cheap', 'genius', '--', 'though', 'a', 'good', 'fellow', 'enough', '--', 'so', 'it', 'was', 'no', 'great', 'surprise', 'to', 'me', 'to' 'hear', 'that', ',', 'in']
 ```
+
+## Converting tokens into token IDs
+To map the previously generated tokens into token IDs, we have to build a vocabulary first. This vocabulary defines how we map each unique word and special character to a unique integer.
+
+Let’s create a list of all unique tokens and sort them alphabetically to determine the vocabulary size:
+
+```
+all_words = sorted(set(preprocessed))
+vocab_size = len(all_words)
+print(vocab_size)
+```
+
+After determining that the vocabulary size is 1,130 via this code, we create the vocabulary and print its first 51 entries:
+
+```
+vocab = {token:integer for integer,token in enumerate(all_words)}
+for i, item in enumerate(vocab.items()):
+print(item)
+if i >= 50:
+break
+```
+
+The output is:
+
+```
+('!', 0)
+('"', 1)
+("'", 2)
+...
+('Her', 49)
+('Hermia', 50)
+```
