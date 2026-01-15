@@ -66,3 +66,18 @@ The resulting whitespace-free output looks like as follows:
 ```
 ['Hello', ',', 'world', '.', 'This', ',', 'is', 'a', 'test', '.']
 ```
+
+Let’s modify it a bit further so that it can also handle other types of punctuation, such as question marks, quotation marks, and the double-dashes:
+
+```
+text = "Hello, world. Is this-- a test?"
+result = re.split(r'([,.:;?_!"()\']|--|\s)', text)
+result = [item.strip() for item in result if item.strip()]
+print(result)
+```
+
+Output:
+
+```
+['Hello', ',', 'world', '.', 'Is', 'this', '--', 'a', 'test', '?']
+```
