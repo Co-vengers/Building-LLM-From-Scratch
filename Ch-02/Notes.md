@@ -40,3 +40,16 @@ The result is a list of individual words, whitespaces, and punctuation character
 ```
 ['Hello,', ' ', 'world.', ' ', 'This,', ' ', 'is', ' ', 'a', ' ', 'test.']
 ```
+
+Let’s modify the regular expression splits on whitespaces (\s), commas, and periods ([,.]):
+
+```
+result = re.split(r'([,.]|\s)', text)
+print(result)
+```
+
+We can see that the words and punctuation characters are now separate list entries just as we wanted:
+
+```
+['Hello', ',', '', ' ', 'world', '.', '', ' ', 'This', ',', '', ' ', 'is', ' ', 'a', ' ', 'test', '.', '']
+```
