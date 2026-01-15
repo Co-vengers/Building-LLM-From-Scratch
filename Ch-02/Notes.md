@@ -53,3 +53,16 @@ We can see that the words and punctuation characters are now separate list entri
 ```
 ['Hello', ',', '', ' ', 'world', '.', '', ' ', 'This', ',', '', ' ', 'is', ' ', 'a', ' ', 'test', '.', '']
 ```
+
+A small remaining problem is that the list still includes whitespace characters. Optionally, we can remove these redundant characters safely as follows:
+
+```
+result = [item for item in result if item.strip()]
+print(result)
+```
+
+The resulting whitespace-free output looks like as follows:
+
+```
+['Hello', ',', 'world', '.', 'This', ',', 'is', 'a', 'test', '.']
+```
