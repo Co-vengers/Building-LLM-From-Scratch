@@ -10,9 +10,9 @@ While we can use pretrained models such as Word2Vec to generate embeddings for m
 ## Tokenizing Text
 The text we will tokenize for LLM training is “The Verdict,” a short story by Edith Wharton.
 
-`
+```
 with open("the-verdict.txt", "r", encoding="utf-8") as f:
     raw_text = f.read()
     print("Total number of character:", len(raw_text))
 print(raw_text[:99])
-`
+```
