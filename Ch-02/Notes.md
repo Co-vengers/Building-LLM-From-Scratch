@@ -16,3 +16,10 @@ with open("the-verdict.txt", "r", encoding="utf-8") as f:
     print("Total number of character:", len(raw_text))
 print(raw_text[:99])
 ```
+
+The print command prints the total number of characters followed by the first 100 characters of this file for illustration purposes:
+
+```
+Total number of character: 20479
+I HAD always thought Jack Gisburn rather a cheap genius--though a good fellow enough--so it was no
+```
