@@ -12,7 +12,7 @@ The text we will tokenize for LLM training is “The Verdict,” a short story b
 
 `
 with open("the-verdict.txt", "r", encoding="utf-8") as f:
-raw_text = f.read()
-print("Total number of character:", len(raw_text))
+    raw_text = f.read()
+    print("Total number of character:", len(raw_text))
 print(raw_text[:99])
 `
