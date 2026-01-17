@@ -165,3 +165,56 @@ The preceding code prints the following token IDs:
 [1, 56, 2, 850, 988, 602, 533, 746, 5, 1126, 596, 5, 1, 67, 7, 38, 851, 1108, 754, 793, 7]
 ```
 
+we can turn these token IDs back into text using the decode method:
+
+```
+print(tokenizer.decode(ids))
+```
+
+Output:
+
+```
+'" It\' s the last he painted, you know," Mrs. Gisburn said with pardonable pride.'
+```
+
+Let’s now apply it to a new text sample not contained in the training set:
+
+```
+text = "Hello, do you like tea?"
+print(tokenizer.encode(text))
+```
+
+Executing this code will result in the following error:
+
+```
+KeyError: 'Hello'
+```
+
+The problem is that the word “Hello” was not used in the “The Verdict” short story. Hence, it is not contained in the vocabulary.
+
+We need to modify the tokenizer to handle unknown words. In particular, we will modify the vocabulary and tokenizer, SimpleTokenizerV2, to support two new tokens, <|unk|> and <|endoftext|>
+
+```
+all_tokens = sorted(list(set(preprocessed)))
+all_tokens.extend(["<|endoftext|>", "<|unk|>"])
+vocab = {token:integer for integer,token in enumerate(all_tokens)}
+print(len(vocab.items()))
+```
+
+The new vocabulary size is 1,132. Let’s print the last five entries of the updated vocabulary:
+
+```
+for i, item in enumerate(list(vocab.items())[-5:]):
+    print(item)
+```
+
+Output:
+
+```
+('younger', 1127)
+('your', 1128)
+('yourself', 1129)
+('<|endoftext|>', 1130)
+('<|unk|>', 1131)
+```
+
