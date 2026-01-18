@@ -113,9 +113,9 @@ After determining that the vocabulary size is 1,130 via this code, we create the
 ```
 vocab = {token:integer for integer,token in enumerate(all_words)}
 for i, item in enumerate(vocab.items()):
-print(item)
-if i >= 50:
-break
+    print(item)
+    if i >= 50:
+        break
 ```
 
 The output is:
@@ -218,3 +218,68 @@ Output:
 ('<|unk|>', 1131)
 ```
 
+Let's update the SimpleTokenizerV2:
+
+```
+class SimpleTokenizerV2:
+    def __init__(self, vocab):
+        self.str_to_int = vocab
+        self.int_to_str = {i:s for s, i in vocab.items()}
+
+    def encode(self, text):
+        preprocessed = re.split(r'([,.:;?_!"()\']|--|\s)', text)
+        preprocessed = [
+            item.strip() for item in preprocessed if item.strip()
+        ]
+        preprocessed = [item if item in self.str_to_int
+                        else "<|unk|>" for item in preprocessed]
+        ids = [self.str_to_int[s] for s in preprocessed]
+        return ids
+    
+    def decode(self, ids):
+        text = " ".join([self.int_to_str[i] for i in ids])
+        text = re.sub(r'\s+([,.:;?!"()\'])', r'\1', text)
+        return text
+```
+
+TokenizerV2 replaces unknown words with <|unk|> tokens.
+
+Let’s now try this new tokenizer:
+
+```
+text1 = "Hello, do you like tea?"
+text2 = "In the sunlit terraces of the palace."
+text = " <|endoftext|> ".join((text1, text2))
+print(text)
+```
+
+Output:
+
+```
+Hello, do you like tea? <|endoftext|> In the sunlit terraces of the palace.
+```
+
+Let’s tokenize the sample text using the SimpleTokenizerV2 on the vocab:
+
+```
+tokenizer = SimpleTokenizerV2(vocab)
+print(tokenizer.encode(text))
+```
+
+This prints the following token IDs:
+
+```
+[1131, 5, 355, 1126, 628, 975, 10, 1130, 55, 988, 956, 984, 722, 988, 1131, 7]
+```
+
+We can see that the list of token IDs contains 1130 for the <|endoftext|> separator token as well as two 1131 tokens, which are used for unknown words. Let’s detokenize the text for a quick sanity check:
+
+```
+print(tokenizer.decode(tokenizer.encode(text)))
+```
+
+The output is:
+
+```
+<|unk|>, do you like tea? <|endoftext|> In the sunlit terraces of the <|unk|>.
+```
