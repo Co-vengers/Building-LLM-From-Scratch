@@ -337,3 +337,75 @@ We can make two noteworthy observations based on the token IDs and decoded text.
 
 The algorithm underlying BPE breaks down words that aren’t in its predefined vocabulary into smaller subword units or even individual characters, enabling it to handle out-of-vocabulary words.
 
+## Data sampling with a sliding window
+
+The next step in creating the embeddings for the LLM is to generate the input–target pairs required for training an LLM.
+
+Let’s implement a data loader that fetches the input–target pairs from the training dataset using a sliding window approach:
+
+```
+with open("the-verdict.txt", "r", encoding="utf-8") as f:
+    raw_text = f.read()
+enc_text = tokenizer.encode(raw_text)
+print(len(enc_text))
+```
+
+Executing this code will return 5145, the total number of tokens in the training set.
+Next, we remove the first 50 tokens from the dataset for demonstration purposes:
+
+```
+enc_sample = enc_text[50:]
+```
+
+One of the easiest and most intuitive ways to create the input–target pairs for the next word prediction task is to create two variables, x and y, where x contains the input tokens and y contains the targets, which are the inputs shifted by 1:
+
+```
+context_size = 4
+x = enc_sample[:context_size]
+y = enc_sample[1:context_size+1]
+print(f"x: {x}")
+print(f"y:      {y}")
+```
+
+Running the previous code prints the following output:
+
+```
+x: [290, 4920, 2241, 287]
+y:      [4920, 2241, 287, 257]
+```
+
+By processing the inputs along with the targets, which are the inputs shifted by one position, we can create the next-word prediction tasks as follows:
+
+```
+for i in range(1, context_size+1):
+    context = enc_sample[:i]
+    desired = enc_sample[i]
+    print(context, "---->", desired)
+```
+
+The code prints:
+
+```
+[290] ----> 4920
+[290, 4920] ----> 2241
+[290, 4920, 2241] ----> 287
+[290, 4920, 2241, 287] ----> 257
+```
+
+Let’s repeat the previous code but convert the token IDs into text:
+
+```
+for i in range(1, context_size+1):
+    context = enc_sample[:i]
+    desired = enc_sample[i]
+    print(tokenizer.decode(context), "---->", tokenizer.decode([desired]))
+```
+
+The following outputs show how the input and outputs look in text format:
+
+```
+and ----> established
+and established ----> himself
+and established himself ----> in
+and established himself in ----> a
+```
