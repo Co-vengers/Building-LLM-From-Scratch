@@ -283,3 +283,55 @@ The output is:
 ```
 <|unk|>, do you like tea? <|endoftext|> In the sunlit terraces of the <|unk|>.
 ```
+
+## Byte Pair Encoding
+
+The BPE tokenizer was used to train LLMs such as GPT-2, GPT-3, and the original model used in ChatGPT.
+
+Since implementing BPE can be relatively complicated, we will use an existing Python open source library called *tiktoken*:
+
+```
+pip install tiktoken
+```
+
+We can instantiate the BPE tokenizer from tiktoken as follows:
+
+```
+import tiktoken
+tokenizer = tiktoken.get_encoding("gpt2")
+```
+
+The usage of this tokenizer is similar to the SimpleTokenizerV2 we implemented previously via an encode method:
+
+```
+text = (
+    "Hello, do you like tea? <|endoftext|> In the sunlit terraces"
+    "of someunknownPlace."
+)
+```
+
+The code prints the following token IDs:
+
+```
+[15496, 11, 466, 345, 588, 8887, 30, 220, 50256, 554, 262, 4252, 18250, 8812, 2114, 286, 617, 34680, 27271, 13]
+```
+
+We can then convert the token IDs back into text using the decode method:
+
+```
+strings = tokenizer.decode(integers)
+print(strings)
+```
+
+The code prints:
+
+```
+Hello, do you like tea? <|endoftext|> In the sunlit terraces of someunknownPlace.
+```
+
+We can make two noteworthy observations based on the token IDs and decoded text. 
+* First, the <|endoftext|> token is assigned a relatively large token ID, namely, 50256.
+* Second, the BPE tokenizer can handle any unknown words.
+
+The algorithm underlying BPE breaks down words that aren’t in its predefined vocabulary into smaller subword units or even individual characters, enabling it to handle out-of-vocabulary words.
+
